@@ -1,11 +1,33 @@
-package main 
+package main
 
-import "strings"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
+func startRepl() {
+	reader := bufio.NewScanner(os.Stdin)
+	for {
+		fmt.Print("Pokedex > ")
+		reader.Scan()
+
+		words := cleanInput(reader.Text())
+		if len(words) == 0 {
+			continue
+		}
+
+		commandName := words[0]
+
+		fmt.Printf("Your command was: %s\n", commandName)
+	}
+}
 
 func cleanInput(text string) []string {
 	slice := strings.Fields(text)
 	lowerCaseWords := make([]string, len(slice))
-	for idx,item := range slice {
+	for idx, item := range slice {
 		lowerCaseWords[idx] = strings.ToLower(item)
 	}
 	return lowerCaseWords
